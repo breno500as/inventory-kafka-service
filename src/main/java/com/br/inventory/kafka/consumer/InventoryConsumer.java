@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import com.br.inventory.service.InventoryService;
 import com.br.inventory.utils.JsonUtil;
 
 @Component
@@ -15,6 +16,9 @@ public class InventoryConsumer {
 
 	@Autowired
 	private JsonUtil jsonUtil;
+	
+	@Autowired
+	private InventoryService inventoryService;
 	
 	@KafkaListener(
 			groupId = "${spring.kafka.consumer.group-id}", 
@@ -27,6 +31,8 @@ public class InventoryConsumer {
 		var event = jsonUtil.toEvent(payload);
 		
 		this.logger.info(event.toString());
+		
+		this.inventoryService.trySuccessEvent(event);
 	}
 	
 	@KafkaListener(
@@ -40,6 +46,8 @@ public class InventoryConsumer {
 		var event = jsonUtil.toEvent(payload);
 		
 		this.logger.info(event.toString());
+		
+		this.inventoryService.rollbackEvent(event);
 	}
 	
 	

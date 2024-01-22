@@ -1,6 +1,9 @@
 package com.br.inventory.dtos;
 
+import static org.springframework.util.ObjectUtils.isEmpty;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.br.inventory.enums.SagaStatusEnum;
@@ -102,6 +105,14 @@ public class Event {
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+	
+	public void addToHistory(History history) {
+		if (isEmpty(this.eventHistory)) {
+			this.eventHistory = new ArrayList<History>();
+		}
+		
+		this.eventHistory.add(history);
 	}
 
 }
