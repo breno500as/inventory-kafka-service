@@ -145,7 +145,7 @@ public class InventoryService {
 		// enviar mais de uma
 		/// vez a mesma mensagem
 		if (this.orderInventoryRepository.existsByOrderIdAndTransactionId(event.getPayload().getId(),
-				event.getPayload().getTransactionId())) {
+				event.getTransactionId())) {
 			throw new ValidationException("There's another transactionId for this order!");
 		}
 
