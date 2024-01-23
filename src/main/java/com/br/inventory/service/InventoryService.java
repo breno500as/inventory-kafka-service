@@ -50,7 +50,7 @@ public class InventoryService {
 
 		} catch (Exception e) {
 			this.logger.error("Error trying update inventory!", e);
-			this.handleFailCurrentNotExecuted(event, CURRENT_SOURCE);
+			this.handleFailCurrentNotExecuted(event, e.getMessage());
 
 		}
 
